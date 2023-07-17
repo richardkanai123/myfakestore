@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import {
     Card,
@@ -16,18 +16,31 @@ import Login from '../Components/Login'
 
 import { db } from '../libs/Firebase'
 import { useCollection } from "react-firebase-hooks/firestore"
-import { collection, query, where } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 
 const Profile = () => {
     const sessionData = useSession()
     // console.log(sessionData);
-    const { user } = useSession()
-    console.log(user);
+    const { data, status } = useSession()
 
-    // const userQuery = query(collection(db, 'users'), where("email" === sessionData?.data.user.email))
-    // const [sessionAccount, loading, error] = useCollection(userQuery)
+    // TODO: know how to retrieve the data from firebase, preferably on a different component
 
-    // console.log(sessionAccount);
+
+    const userQuery = query(collection(db, 'users'), where("email", "==", (status === "authenticated" && status != "loading") && data.user.email))
+    const [value, loading, error] = useCollection(userQuery)
+    const fetchUsers = () => {
+        if (!loading && status == "authenticated") {
+            value.docs.map((doc) => {
+                const docData = { ...doc.data(), doc, id }
+                console.log(docData)
+            })
+
+
+        }
+    }
+
+
+
 
     if (sessionData.status === "loading") {
 
@@ -74,7 +87,7 @@ const Profile = () => {
 
                     <CardFooter>
                         <Center>
-                            <Text>Current Session Expires at: </Text>
+                            <Text>Current Session Expires at:{data.expires} </Text>
                         </Center>
                     </CardFooter>
                 </Card>
