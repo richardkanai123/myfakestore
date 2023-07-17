@@ -15,6 +15,8 @@ import { FaShoppingCart, FaUserCircle, FaHome } from 'react-icons/fa'
 import { BiSolidContact } from "react-icons/bi"
 import NextLink from 'next/link'
 import { Link } from '@chakra-ui/react'
+import Login from './Login'
+
 
 const MenuBar = () => {
     return (
@@ -24,6 +26,8 @@ const MenuBar = () => {
                 <Link as={NextLink} fontSize="2xl" color="whiteAlpha.900" href="/" fontWeight="bold" >fakeStore</Link>
             </Box>
 
+            <Login />
+
             <Menu>
                 <MenuButton
                     as={IconButton}
@@ -31,7 +35,6 @@ const MenuBar = () => {
                     icon={<HamburgerIcon />}
                     variant='outline'
                 />
-
 
 
                 <MenuList as="div" fontSize="large">

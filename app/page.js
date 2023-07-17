@@ -1,7 +1,7 @@
+import { Suspense } from "react"
 import ProductCard from "./Components/ProductCard"
 
 
-// metadata
 
 export const metadata = {
   title: "Home",
@@ -45,9 +45,30 @@ const Home = async () => {
           padding: "5px"
         }} >
 
-          {data.map((product) => {
-            return <ProductCard key={product.id} product={product} />
-          })}
+          <Suspense fallback={
+            <div style={{
+              display: 'flex',
+              gap: "20px",
+              flexWrap: "wrap",
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: "5px",
+              textAlign: "center"
+            }} >
+              <p style={{
+                fontSize: "32px",
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: "5px",
+                textAlign: "center"
+              }} >Loading Products.....</p>
+            </div>
+          }>
+
+            {data.map((product) => {
+              return <ProductCard key={product.id} product={product} />
+            })}
+          </Suspense>
 
         </div>
 
