@@ -1,45 +1,65 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import {
     Card,
     CardHeader,
-    CardBody,
     CardFooter,
     Center, Button,
     Flex, Container, Avatar,
-    Box, Text, Heading, IconButton, Image
+    Box, Text, Heading, VStack
 } from '@chakra-ui/react'
 
-import { Spinner } from '@chakra-ui/react'
-import Login from '../Components/Login'
+import { Spinner, useToast } from '@chakra-ui/react'
 
 import { db } from '../libs/Firebase'
 import { useCollection } from "react-firebase-hooks/firestore"
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, query, where } from 'firebase/firestore'
+import { useRouter } from 'next/navigation'
 
 const Profile = () => {
     const sessionData = useSession()
-    // console.log(sessionData);
+
     const { data, status } = useSession()
 
-    // TODO: know how to retrieve the data from firebase, preferably on a different component
+    const [userCredentials, setUserCredentials] = useState({})
+    // chakra ui Toast
+    const Toast = useToast()
 
+    // Router
+    const Router = useRouter()
 
     const userQuery = query(collection(db, 'users'), where("email", "==", (status === "authenticated" && status != "loading") && data.user.email))
     const [value, loading, error] = useCollection(userQuery)
     const fetchUsers = () => {
-        if (!loading && status == "authenticated") {
+        let docData = {}
+        if (status == "authenticated") {
             value.docs.map((doc) => {
-                const docData = { ...doc.data(), doc, id }
-                console.log(docData)
+                docData = { ...doc.data() }
             })
 
-
+            setUserCredentials(docData)
         }
+        else {
+            if (value === null && error != null) {
+                Toast({
+                    title: "Fetch Error",
+                    description: error.message,
+                    status: "error",
+                    duration: 5000,
+                })
+                Router.push("/")
+            }
+        }
+
     }
 
-
+    useEffect(() => {
+        if (!loading) {
+            fetchUsers()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loading])
 
 
     if (sessionData.status === "loading") {
@@ -56,9 +76,10 @@ const Profile = () => {
     else if (sessionData.status === "unauthenticated") {
         return (
             <Container>
-                <Center>
-                    <Login />
-                </Center>
+                <VStack justify="center" align="center" gap="20px" w={"full"} p={2}>
+                    <Heading> No User Found! </Heading>
+                    <Text>You are Not Logged in</Text>
+                </VStack>
             </Container>
         )
     }
@@ -70,12 +91,12 @@ const Profile = () => {
                     <CardHeader>
                         <Flex spacing='4' wrap="wrap">
                             <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                <Avatar name={(sessionData.status !== "loading" || sessionData.status !== "unauthenticated") && sessionData.data?.user.name} src={sessionData.status !== "loading" && sessionData.data.user.image} />
+                                <Avatar name={userCredentials.name} src={userCredentials.image} />
                                 <Box>
                                     <Heading size='sm'>
-                                        {sessionData.status !== "loading" && sessionData.data.user.name}
+                                        {userCredentials.name}
                                     </Heading>
-                                    <Text>{sessionData.status !== "loading" && sessionData.data.user.email}</Text>
+                                    <Text>{userCredentials.email}</Text>
                                 </Box>
 
                                 <Button colorScheme="facebook" p="2" onClick={() => signOut()} >

@@ -12,7 +12,7 @@ const Login = () => {
     if (sesssionStatus === "unauthenticated") {
 
         return (
-            <Container w="container.md" as="div" display="flex" >
+            <Container w="container.md" as="div" display="flex" alignSelf="center" mx="auto" >
                 <Center>
                     <Button onClick={() => signIn('google')} size="md" colorScheme="linkedin" rounded="md" p='20px'>LogIn With Google</Button>
 
