@@ -3,6 +3,7 @@ import MenuBar from './Components/MenuBar'
 import AuthSessionProvider from './Components/SessionProvider'
 import { Providers } from './chakraProvider'
 import { VStack } from '@chakra-ui/react'
+import { UserContextProvider } from './context/UserContext'
 
 
 export default function RootLayout({ children }) {
@@ -19,11 +20,12 @@ export default function RootLayout({ children }) {
       }}>
         <AuthSessionProvider>
           <Providers>
-            <VStack width="100%" align='center' justify="center" padding="2" spacing={4} >
-              <MenuBar />
-              {children}
-            </VStack>
-
+            <UserContextProvider>
+              <VStack width="100%" align='center' justify="center" padding="2" spacing={4} >
+                <MenuBar />
+                {children}
+              </VStack>
+            </UserContextProvider>
           </Providers>
         </AuthSessionProvider>
       </body>

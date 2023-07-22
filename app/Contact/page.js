@@ -1,20 +1,19 @@
 'use client'
-
-import { PhoneIcon } from "@chakra-ui/icons"
-import { Button, Container, Flex, Input, InputGroup, InputLeftElement, useToast } from "@chakra-ui/react"
 import {
+    Button, Container,
+    Flex, Input, useToast,
     FormControl,
     FormLabel,
-    FormHelperText,
     Textarea
 } from '@chakra-ui/react'
 import { useState } from "react"
+import { db } from "../libs/Firebase"
+import { collection, doc, setDoc } from "firebase/firestore"
+
 const Page = () => {
 
     const [SenderEmail, setSenderEmail] = useState("")
     const [Message, setMessage] = useState('')
-
-
 
     const Toast = useToast()
 
@@ -23,7 +22,7 @@ const Page = () => {
         return /\S+@\S+\.\S+/.test(email);
     }
 
-    const handleSendMessage = () => {
+    const handleSendMessage = async () => {
 
         // chck that none is null...
         if (SenderEmail === "" || Message === "") {
@@ -45,18 +44,57 @@ const Page = () => {
             return false
         }
         else {
-            console.log(SenderEmail, SenderEmail, Message);
 
             Toast({
                 title: "Sending Message....",
                 description: "Sending Your Message",
                 status: "loading",
                 variant: "top-accent",
-                position: "top"
-            })
+                position: "top",
+                duration: 2000,
+                isClosable: false
 
-            setSenderEmail("")
-            setMessage("")
+            })
+            // console.log(SenderEmail, Message);
+            const messageContent = {
+                SenderEmail,
+                Message
+            }
+
+            const messagesCollectionRef = collection(db, "messages")
+            const newMessageDocRef = doc(messagesCollectionRef)
+
+            try {
+                await setDoc(newMessageDocRef, messageContent)
+                    .then(() => {
+                        Toast.closeAll()
+                    })
+                    .finally(() => {
+                        Toast({
+                            title: "Message Sent",
+                            status: "success",
+                            variant: "solid",
+                            position: "top",
+                            duration: 3000,
+                            isClosable: true
+                        })
+
+                        setSenderEmail("")
+                        setMessage("")
+                    })
+            } catch (error) {
+                Toast.closeAll()
+                Toast({
+                    title: "Error!",
+                    description: `${error.message}`,
+                    status: "error",
+                    variant: "solid",
+                    position: "top",
+                    duration: 3000,
+                    isClosable: true
+                })
+
+            }
         }
 
     }

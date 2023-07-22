@@ -12,9 +12,11 @@ const Login = () => {
     if (sesssionStatus === "unauthenticated") {
 
         return (
-            <Container w="container.md" as="div" display="flex" alignSelf="center" mx="auto" >
-                <Center>
-                    <Button onClick={() => signIn('google')} size="md" colorScheme="linkedin" rounded="md" p='20px'>LogIn With Google</Button>
+            <Container border="none" p="1" w="-moz-fit-content" as="div" display="flex" alignSelf="center" alignItems="center" justifyContent="center"  >
+                <Center as="div" display="flex" alignSelf="center" justifyContent="center" alignItems="center" >
+                    <Button onClick={() => signIn('google')} size="md" colorScheme="facebook" rounded="md" p='20px'>
+                        LogIn With Google
+                    </Button>
 
                 </Center>
             </Container>
@@ -25,7 +27,10 @@ const Login = () => {
         return (
             <Container w="container.md" as="div" display="flex" >
                 <Center>
-                    <Spinner />
+                    <HStack>
+                        <Spinner />
+                        <Text fontSize="x-small">Loading User...</Text>
+                    </HStack>
                 </Center>
             </Container>
         )

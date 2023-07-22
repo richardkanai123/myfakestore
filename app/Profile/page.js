@@ -16,6 +16,7 @@ import { db } from '../libs/Firebase'
 import { useCollection } from "react-firebase-hooks/firestore"
 import { collection, query, where } from 'firebase/firestore'
 import { useRouter } from 'next/navigation'
+import Login from '../Components/Login'
 
 const Profile = () => {
     const sessionData = useSession()
@@ -76,10 +77,12 @@ const Profile = () => {
     else if (sessionData.status === "unauthenticated") {
         return (
             <Container>
-                <VStack justify="center" align="center" gap="20px" w={"full"} p={2}>
+                <Center w="full" as="div" display="flex" flexDir="column">
                     <Heading> No User Found! </Heading>
                     <Text>You are Not Logged in</Text>
-                </VStack>
+                    <Login />
+                </Center>
+
             </Container>
         )
     }

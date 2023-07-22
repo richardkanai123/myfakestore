@@ -6,9 +6,8 @@ import { AiFillHeart } from 'react-icons/ai'
 const ProductCard = ({ product }) => {
     const { id, title, price, image } = product
 
-
     return (
-        <Card as="a" maxW='sm' minW='320px' href={`/Product/${id}`}  >
+        <Card as="a" maxW='sm' minW='320px' href={`/Product/${id}`} colorScheme='green' bg="chakra-subtle-bg._dark"  >
             <CardBody display="flex" flexDir="column" alignContent="center" alignItems="center">
                 <Image
                     src={image}
@@ -18,27 +17,16 @@ const ProductCard = ({ product }) => {
                     objectFit="contain"
                     objectPosition="center"
                 />
-                <Stack mt='4' h="150px">
+                <Divider />
+                <Stack w="full" mt='4' h="150px">
                     <Heading size='md' color="blue.500" textAlign="left" mb="2">{title}</Heading>
 
-                    <Heading color='blue.600' fontWeight="bold" fontSize='2xl' display="flex">
+                    <Heading color='blue.600' fontWeight="extrabold" fontSize='3xl' display="flex">
                         <Text fontSize="sm" >$</Text>
                         {price}
                     </Heading>
                 </Stack>
             </CardBody>
-            <Divider />
-            <CardFooter>
-                <ButtonGroup display="flex" alignContent="center" alignItems="center" >
-                    <Button variant='outline' colorScheme='blue' >
-                        Add to cart
-                    </Button>
-                    <Button variant='ghost' colorScheme='red'>
-                        <AiFillHeart />
-                    </Button>
-
-                </ButtonGroup>
-            </CardFooter>
         </Card>
     )
 }
