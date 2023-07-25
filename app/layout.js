@@ -10,7 +10,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
 
-
       <body style={{
         width: "100%",
         height: "100%",
@@ -19,14 +18,14 @@ export default function RootLayout({ children }) {
         padding: '20px'
       }}>
         <AuthSessionProvider>
-          <Providers>
-            <UserContextProvider>
+          <UserContextProvider>
+            <Providers>
               <VStack width="100%" align='center' justify="center" padding="2" spacing={4} >
                 <MenuBar />
                 {children}
               </VStack>
-            </UserContextProvider>
-          </Providers>
+            </Providers>
+          </UserContextProvider>
         </AuthSessionProvider>
       </body>
 
