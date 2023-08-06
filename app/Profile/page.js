@@ -76,19 +76,19 @@ const Profile = () => {
 
     else if (sessionData.status === "unauthenticated") {
         return (
-            <Container>
+            <Flex>
                 <Center w="full" as="div" display="flex" flexDir="column">
                     <Heading> No User Found! </Heading>
                     <Text>You are Not Logged in</Text>
                     <Login />
                 </Center>
 
-            </Container>
+            </Flex>
         )
     }
 
     return (
-        <Container>
+        <Flex>
             <Center>
                 <Card maxW='md' bg="ButtonShadow">
                     <CardHeader>
@@ -116,7 +116,7 @@ const Profile = () => {
                     </CardFooter>
                 </Card>
             </Center>
-        </Container>
+        </Flex>
     )
 }
 

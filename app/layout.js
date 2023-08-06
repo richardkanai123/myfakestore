@@ -15,12 +15,12 @@ export default function RootLayout({ children }) {
         height: "100%",
         // backgroundColor: "#a6bdbd",
         backgroundColor: "#adccb3",
-        padding: '20px'
+        padding: '10px',
       }}>
         <AuthSessionProvider>
           <UserContextProvider>
             <Providers>
-              <VStack width="100%" align='center' justify="center" padding="2" spacing={4} >
+              <VStack w="full" marginX="auto" width="100%" align='center' justify="center" padding="2" spacing={4} >
                 <MenuBar />
                 {children}
               </VStack>

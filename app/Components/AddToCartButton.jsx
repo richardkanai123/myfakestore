@@ -6,7 +6,7 @@ import { db } from '../libs/Firebase'
 import { useEffect, useState } from "react";
 import { Button, Spinner, Text, useToast } from "@chakra-ui/react";
 import Login from "./Login"
-const AddToCartButton = ({ Product }) => {
+const AddToCartButton = ({ Product, Quantity }) => {
     const { id, title, price } = Product
     const { data, status } = useSession()
     const [currentUserDetails, setCurrentUserDetails] = useState()
@@ -41,12 +41,15 @@ const AddToCartButton = ({ Product }) => {
             const userCartCollectionRef = doc(db, "users", userID)
             const CartRef = doc(collection(userCartCollectionRef, "cart"))
 
+
+
             const newCartItem = {
                 itemID: id,
                 itemTitle: title,
                 unitPrice: price,
+                quantity: Quantity,
                 timeAdded: serverTimestamp(),
-                status: "in-cart"
+                status: "in-cart",
             }
 
             try {

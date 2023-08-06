@@ -5,7 +5,7 @@ import { AiFillHeart } from 'react-icons/ai'
 
 const ProductCard = ({ product }) => {
     const { id, title, price, image } = product
-
+    // console.log(image);
     return (
         <Card as="a" maxW='sm' minW='320px' href={`/Product/${id}`} colorScheme='green' bg="chakra-subtle-bg._dark"  >
             <CardBody display="flex" flexDir="column" alignContent="center" alignItems="center">

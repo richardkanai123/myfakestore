@@ -62,7 +62,7 @@ const MenuBar = () => {
                             }
 
                             {
-                                status === "unauthenticated" && <Box zIndex="overlay">
+                                status === "unauthenticated" && <Box>
                                     Go To Login
                                 </Box>
                             }

@@ -15,7 +15,7 @@ const Login = () => {
             <Container border="none" p="1" w="-moz-fit-content" as="div" display="flex" alignSelf="center" alignItems="center" justifyContent="center"  >
                 <Center as="div" display="flex" alignSelf="center" justifyContent="center" alignItems="center" >
                     <Button onClick={() => signIn('google')} size="md" colorScheme="facebook" rounded="md" p='20px'>
-                        LogIn With Google
+                        Log In With Google
                     </Button>
 
                 </Center>
